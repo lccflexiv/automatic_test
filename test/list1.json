@@ -1,18 +1,18 @@
 {
    "Tutorial1-Basic" : {
-      "executed" : "Yes",
+      "executed" : "No",
       "existance" : "Yes"
    },
    "Tutorial2-PlanVariables" : {
-      "executed" : "Yes",
-      "existance" : "Yes"
+      "executed" : "",
+      "existance" : ""
    },
    "Tutorial3-NestedPlan" : {
-      "executed" : "Yes",
-      "existance" : "Yes"
+      "executed" : "",
+      "existance" : ""
    },
    "Tutorial4-NoExist" : {
-      "executed" : "No",
-      "existance" : "No"
+      "executed" : "",
+      "existance" : ""
    }
 }

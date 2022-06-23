@@ -8,17 +8,8 @@
 #include <flexiv/Robot.hpp>
 #include <flexiv/Exception.hpp>
 #include <flexiv/Log.hpp>
-#include <jsoncpp/json/json.h>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <mutex>
-#include <thread>
-#include <algorithm>
-std::vector<std::string> goalPlanList;
-std::vector<std::string> realPlanList;
-enum Status{SUCCESS, ROBOT, CSV, JSON};
+
+#include <autotest/SystemParams.h>
 
 int readCSV(std::string filename, flexiv::Log* logPtr)
 {
@@ -30,7 +21,7 @@ int readCSV(std::string filename, flexiv::Log* logPtr)
     }
     std::string item;
     while(getline(csvFile, item)){
-        goalPlanList.push_back(item);
+        g_goalPlanList.push_back(item);
     }
     return SUCCESS;
 }
@@ -68,7 +59,7 @@ int generateJSON(std::string filePath, std::string csvFileName, std::string json
     }
     Json::Value plan;
     std::vector<std::string>::iterator it;
-    for (it = goalPlanList.begin(); it != goalPlanList.end(); it++){
+    for (it = g_goalPlanList.begin(); it != g_goalPlanList.end(); it++){
         plan[(*it)]["existance"] = "";
         plan[(*it)]["executed"] = "";
     }
@@ -136,10 +127,10 @@ int executeRobotPlan(flexiv::Robot* robot, std::string planName, flexiv::Log* lo
 
 int checkJson(flexiv::Robot* robotPtr, std::string filePath, std::string jsonFileName, flexiv::Log* logPtr){
     int result;
-    realPlanList = robotPtr->getPlanNameList();
-    for (std::string eachPlan : goalPlanList)
+    g_realPlanList = robotPtr->getPlanNameList();
+    for (std::string eachPlan : g_goalPlanList)
     {
-        if (std::find(realPlanList.begin(), realPlanList.end(), eachPlan) == realPlanList.end()){
+        if (std::find(g_realPlanList.begin(), g_realPlanList.end(), eachPlan) == g_realPlanList.end()){
             logPtr->warn("Plan: "+eachPlan+" does not exist");
             result = modifyJSON(filePath, jsonFileName, eachPlan, "No", "No", logPtr);
         }   
