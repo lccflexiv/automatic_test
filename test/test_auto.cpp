@@ -4,11 +4,11 @@
  * @copyright Copyright (C) 2016-2021 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
-
+//flexiv headers
 #include <flexiv/Robot.hpp>
 #include <flexiv/Exception.hpp>
 #include <flexiv/Log.hpp>
-
+// autotest headers
 #include <autotest/SystemParams.h>
 #include <autotest/RobotOperation.hpp>
 #include <autotest/ManageJson.hpp>

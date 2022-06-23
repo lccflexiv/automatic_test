@@ -5,6 +5,7 @@
 
 #ifndef FLEXIVRDK_ROBOTOPERATIONS_HPP_
 #define FLEXIVRDK_ROBOTOPERATIONS_HPP_
+// autotest headers
 #include <autotest/SystemParams.h>
 
 // This function make robot execute the plan and wait for it to finish
