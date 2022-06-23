@@ -118,18 +118,11 @@ int main(int argc, char* argv[])
     // Log object for printing message with timestamp and coloring
     flexiv::Log log;
 
-    // Parse Parameters
-    //=============================================================================
-    // Check if program has 3 arguments
-    if (argc != 3) {
-        log.error("Invalid program arguments. Usage: <robot_ip> <local_ip>");
-        return 0;
-    }
     // IP of the robot server
-    std::string robotIP = argv[1];
+    std::string robotIP = "127.0.0.1";
 
     // IP of the workstation PC running this program
-    std::string localIP = argv[2];
+    std::string localIP = "127.0.0.1";
 
     try {
         // RDK Initialization
@@ -156,7 +149,7 @@ int main(int argc, char* argv[])
         // TODO: remove this extra try catch block after the destructor bug in
         // Windows library is fixed
         try {
-            robot.enable();
+            //robot.enable();
         } catch (const flexiv::Exception& e) {
             log.error(e.what());
             return 0;

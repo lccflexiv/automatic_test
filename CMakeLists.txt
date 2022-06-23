@@ -27,19 +27,19 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/example)
 
 # list of examples
 set(EXAMPLE_LIST
-  auto_recovery
-  cartesian_impedance_control
-  clear_fault
-  display_robot_states
-  floating_with_soft_limits
-  gripper_control
-  joint_impedance_control
-  joint_position_control
-  plan_execution
-  primitive_execution
-  robot_dynamics
-  series_operation
-  visualization
+  #auto_recovery
+  #cartesian_impedance_control
+  #clear_fault
+  #display_robot_states
+  #floating_with_soft_limits
+  #gripper_control
+  #joint_impedance_control
+  #joint_position_control
+  #plan_execution
+  #primitive_execution
+  #robot_dynamics
+  #series_operation
+  #visualization
 )
 
 foreach(example ${EXAMPLE_LIST})
@@ -79,13 +79,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/test)
 
 # list of tests
 set(TEST_LIST
-  test_dynamics_engine
-  test_dynamics_with_tool
-  test_endurance
-  test_log
-  test_loop_latency
-  test_scheduler
-  test_timeliness_monitor
+  test_auto
+  #test_dynamics_engine
+  #test_dynamics_with_tool
+  #test_endurance
+  #test_log
+  #test_loop_latency
+  #test_scheduler
+  #test_timeliness_monitor
 )
 
 foreach(test ${TEST_LIST})
@@ -111,7 +112,8 @@ foreach(test ${TEST_LIST})
       ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/cpp/arm64/libFlexivRdk.a)
   else()
     target_link_libraries(${test} 
-      ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/cpp/x64/libFlexivRdk.a)
+      ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/cpp/x64/libFlexivRdk.a
+      ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/cpp/x64/libjsoncpp.a)
   endif()
 
 endforeach()
