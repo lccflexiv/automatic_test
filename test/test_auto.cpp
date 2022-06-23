@@ -10,6 +10,7 @@
 #include <flexiv/Log.hpp>
 
 #include <autotest/SystemParams.h>
+#include <autotest/RobotOperation.hpp>
 
 int readCSV(std::string filename, flexiv::Log* logPtr)
 {
@@ -106,25 +107,6 @@ int modifyJSON(std::string filePath,
     return SUCCESS;
 }
 
-// This function make robot execute the plan and wait for it to finish
-int executeRobotPlan(flexiv::Robot* robot, std::string planName, flexiv::Log* logPtr){
-    flexiv::SystemStatus systemStatus;
-    robot->executePlanByName(planName);
-    while (systemStatus.m_programRunning == false)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        robot->getSystemStatus(&systemStatus);
-    }
-    while (systemStatus.m_programRunning == true)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        robot->getSystemStatus(&systemStatus);
-    }
-    
-    logPtr->info("Robot has executed plan: " + planName);
-    return SUCCESS;
-}
-
 int checkJson(flexiv::Robot* robotPtr, std::string filePath, std::string jsonFileName, flexiv::Log* logPtr){
     int result;
     g_realPlanList = robotPtr->getPlanNameList();
@@ -151,17 +133,9 @@ int main()
 {
     // Log object for printing message with timestamp and coloring
     flexiv::Log log;
-
-    // IP of the robot server
-    std::string robotIP = "127.0.0.1";
-
-    // IP of the workstation PC running this program
-    std::string localIP = "127.0.0.1";
     int result;
     try {
         // RDK Initialization
-        //=============================================================================
-        // Instantiate robot interface
         flexiv::Robot robot(robotIP, localIP);
 
         // Clear fault on robot server if any
@@ -173,7 +147,7 @@ int main()
             // Check again
             if (robot.isFault()) {
                 log.error("Fault cannot be cleared, exiting ...");
-                return 0;
+                return ROBOT;
             }else
             log.info("Fault on robot server is cleared");
         }
@@ -184,7 +158,7 @@ int main()
             //robot.enable();
         } catch (const flexiv::Exception& e) {
             log.error(e.what());
-            return 0;
+            return ROBOT;
         }
 
         // Wait for the robot to become operational
@@ -202,7 +176,8 @@ int main()
         }
         log.info("Robot is now in plan execution mode");
         log.info("---------------start executing plans in csv list---------------");
-        //create associate json file name
+        
+        //Import csv files and Json files
         std::string filePath = "/home/ae/flexiv_rdk_versions/flexiv_rdk_autotest/test/";
         std::string csvFileName = "list.csv";
         std::string jsonFileName = "list1.json";
@@ -212,7 +187,7 @@ int main()
         robot.setMode(flexiv::MODE_IDLE);
     } catch (const flexiv::Exception& e) {
         log.error(e.what());
-        return 0;
+        return UNKNOWN;
     }
 
     return 0;
