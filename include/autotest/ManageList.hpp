@@ -49,7 +49,8 @@ int readCSV(std::string filePath, std::string csvFileName, flexiv::Log* logPtr)
     std::string item;
     while(getline(inputCSVFile, item))
     {
-        if (item[0] == '$'){
+        if (item[0] == '$')
+        {
             g_goalPlanList.push_back(item.substr(item.find_first_of('$')+1));
         }
     }
