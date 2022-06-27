@@ -35,7 +35,7 @@ set(EXAMPLE_LIST
   #gripper_control
   #joint_impedance_control
   #joint_position_control
-  #plan_execution
+  plan_execution
   #primitive_execution
   #robot_dynamics
   #series_operation

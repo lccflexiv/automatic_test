@@ -8,21 +8,7 @@
 // autotest headers
 #include <autotest/SystemParams.h>
 #include <autotest/RobotOperation.hpp>
-
-int readCSV(std::string filename, flexiv::Log* logPtr)
-{
-    std::ifstream csvFile(filename, std::ios::in);
-    if(csvFile.fail())
-    {
-        logPtr->error("Failed to read file: " + filename);
-        return CSV;
-    }
-    std::string item;
-    while(getline(csvFile, item)){
-        g_goalPlanList.push_back(item);
-    }
-    return SUCCESS;
-}
+#include <autotest/ManageList.hpp>
 
 int readJSON(flexiv::Robot* robotPtr, std::string filePath, std::string jsonFileName, flexiv::Log* logPtr){
     std::ifstream ijsonFile(filePath+jsonFileName);
@@ -46,10 +32,7 @@ int readJSON(flexiv::Robot* robotPtr, std::string filePath, std::string jsonFile
 }
 
 int generateJSON(std::string filePath, std::string csvFileName, std::string jsonFileName, flexiv::Log* logPtr){
-    int result = readCSV(filePath+csvFileName, logPtr);
-    if (result!=SUCCESS){
-        return result;
-    }
+
     std::fstream jsonFile(filePath+jsonFileName, std::ios::out);
     if (!jsonFile.is_open()) {
         logPtr->error("Failed to create JSON file: " + jsonFileName);

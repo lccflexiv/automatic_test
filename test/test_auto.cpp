@@ -11,6 +11,7 @@
 // autotest headers
 #include <autotest/SystemParams.h>
 #include <autotest/RobotOperation.hpp>
+#include <autotest/ManageList.hpp>
 #include <autotest/ManageJson.hpp>
 
 int main()
@@ -63,11 +64,21 @@ int main()
         
         //Import csv files and Json files
         std::string filePath = "/home/ae/flexiv_rdk_versions/flexiv_rdk_autotest/test/";
-        std::string csvFileName = "list.csv";
+        std::string csvFileName = "list1.csv";
         std::string jsonFileName = "list1.json";
+        // Generate a csv file that contains all the work plans in robot
+        result = generateCSV(&robot, filePath, csvFileName, &log);
+        char c;
+        while (c!='s'){
+            std::cout<<"Please edit the file "<<csvFileName<<" before press s"<<std::endl;
+            std::cin>>c;
+        }
+        //program will stuck at here, until you press s
+        result = readCSV(filePath, csvFileName, &log);
         result = generateJSON(filePath, csvFileName, jsonFileName, &log);
         result = checkJson(&robot, filePath, jsonFileName, &log);
         result = readJSON(&robot, filePath, jsonFileName, &log);
+
         robot.setMode(flexiv::MODE_IDLE);
     } catch (const flexiv::Exception& e) {
         log.error(e.what());
