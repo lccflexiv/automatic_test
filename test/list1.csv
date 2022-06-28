@@ -18,9 +18,9 @@ PLAN-ArmPackagingPose
 PLAN-CartPoseCtrl-PIH
 PLAN-FreeDriveAuto
 PLAN-FreeDriveManual
-$PLAN-Home
+PLAN-Home
 PLAN-JointPvatDownload
-$PLAN-MoveCircle
+PLAN-MoveCircle
 PLAN-MoveLine
 PLAN-MoveToManualReady
 PLAN-RecoveryMode
@@ -29,10 +29,10 @@ Pt-PihZigzag
 Pt-PolishSurface
 Pt-TrayLoading
 Pt-TrayUnloading
-Tutorial1-Basic
+$Tutorial1-Basic
 Tutorial10-AICmdExample
-Tutorial2-PlanVariables
-Tutorial3-NestedPlan
+$Tutorial2-PlanVariables
+$Tutorial3-NestedPlan
 Tutorial4-LoopStatement
 Tutorial5-ToolCmdExample
 Tutorial6-ParentPlanParameter
