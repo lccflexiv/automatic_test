@@ -1,13 +1,5 @@
 {
-   "Tutorial1-Basic" : {
-      "executed" : "Yes",
-      "existance" : "Yes"
-   },
-   "Tutorial2-PlanVariables" : {
-      "executed" : "Yes",
-      "existance" : "Yes"
-   },
-   "Tutorial3-NestedPlan" : {
+   "lcc-Tutorial1-Basic" : {
       "executed" : "Yes",
       "existance" : "Yes"
    }

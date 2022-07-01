@@ -130,21 +130,21 @@ int main()
 
     // IP of the workstation PC running this program
     std::string localIP = "127.0.0.1";
-
+    std::shared_ptr<flexiv::Robot> robot = std::make_shared<flexiv::Robot>(robotIP, localIP);
     try {
         // RDK Initialization
         //=============================================================================
         // Instantiate robot interface
-        flexiv::Robot robot(robotIP, localIP);
+        //flexiv::Robot robot(robotIP, localIP);
 
         // Clear fault on robot server if any
-        if (robot.isFault()) {
+        if (robot->isFault()) {
             log.warn("Fault occurred on robot server, trying to clear ...");
             // Try to clear the fault
-            robot.clearFault();
+            robot->clearFault();
             std::this_thread::sleep_for(std::chrono::seconds(2));
             // Check again
-            if (robot.isFault()) {
+            if (robot->isFault()) {
                 log.error("Fault cannot be cleared, exiting ...");
                 return 0;
             }
@@ -163,16 +163,16 @@ int main()
         }
 
         // Wait for the robot to become operational
-        while (!robot.isOperational()) {
+        while (!robot->isOperational()) {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
         log.info("Robot is now operational");
 
         // Set mode after robot is operational
-        robot.setMode(flexiv::MODE_PLAN_EXECUTION);
+        robot->setMode(flexiv::MODE_PLAN_EXECUTION);
 
         // Wait for the mode to be switched
-        while (robot.getMode() != flexiv::MODE_PLAN_EXECUTION) {
+        while (robot->getMode() != flexiv::MODE_PLAN_EXECUTION) {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
@@ -180,7 +180,7 @@ int main()
         //=============================================================================
         // Use std::thread for some low-priority tasks, not joining
         // (non-blocking)
-        std::thread lowPriorityThread(std::bind(userInputStateMachine, &robot));
+        std::thread lowPriorityThread(std::bind(userInputStateMachine, robot.get()));
 
         // User Input
         //=============================================================================
@@ -200,7 +200,7 @@ int main()
         }
         std::cout<<"pass"<<std::endl;
         // Properly exit thread
-        lowPriorityThread.join();
+        //lowPriorityThread.join();
 
     } catch (const flexiv::Exception& e) {
         log.error(e.what());
