@@ -18,9 +18,9 @@ PLAN-ArmPackagingPose
 PLAN-CartPoseCtrl-PIH
 PLAN-FreeDriveAuto
 PLAN-FreeDriveManual
-$PLAN-Home
+PLAN-Home
 PLAN-JointPvatDownload
-$PLAN-MoveCircle
+PLAN-MoveCircle
 PLAN-MoveLine
 PLAN-MoveToManualReady
 PLAN-RecoveryMode
@@ -29,7 +29,7 @@ Pt-PihZigzag
 Pt-PolishSurface
 Pt-TrayLoading
 Pt-TrayUnloading
-Tutorial1-Basic
+$Tutorial1-Basic
 Tutorial10-AICmdExample
 Tutorial2-PlanVariables
 Tutorial3-NestedPlan
@@ -65,5 +65,3 @@ TWR-MultiDOFSineTest_FullPayload
 TWR-MultiDOFSineTest_Slow
 TestEasyContact
 TestEasyMove
-New-MainPlan
-lcc
