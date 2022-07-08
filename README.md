@@ -3,8 +3,8 @@
 ### RDK provides Linux C++ & Python Interface
 1. Check with RCA's version and make sure you have the correct rdk lib files
 2. Make sure you are licensed with your robot or simulator
-3. This little pack is based on v2.9.1-rawforcesensor, you can just copy & paste some head files and test_auto.cpp to your work folder and it should work as well. 
-4. Change your IP address in SystemParams.h in Include/autotest
+3. This pack is based on branch v2.9.1-rawforcesensor, you need to replace some head files and lib files in order to compile test_auto.cpp in your work folder and it should work as well. 
+4. Change your IP address in SystemParams.h in include/autotest folder
 5. Configure CMake and compile all C++ example programs for the x64 processor platform:
 
         cd flexiv_rdk
