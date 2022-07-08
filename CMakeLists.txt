@@ -80,7 +80,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/test)
 # list of tests
 set(TEST_LIST
   test_auto
-  plan_execution_num
   #test_dynamics_engine
   #test_dynamics_with_tool
   #test_endurance
