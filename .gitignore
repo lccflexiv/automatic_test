@@ -3,3 +3,5 @@
 config.h
 build/
 html/
+test/list1.csv
+test/list1.json
