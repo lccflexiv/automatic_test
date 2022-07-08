@@ -79,6 +79,19 @@ int main()
         result = checkJson(&robot, filePath, jsonFileName, &log);
         result = readJSON(&robot, filePath, jsonFileName, &log);
 
+        // Clear fault on robot server if any
+        if (robot.isFault()) {
+            log.warn("Fault occurred on robot server, trying to clear ...");
+            // Try to clear the fault
+            robot.clearFault();
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            // Check again
+            if (robot.isFault()) {
+                log.error("Fault cannot be cleared, exiting ...");
+                return ROBOT;
+            }else
+            log.info("Fault on robot server is cleared");
+        }
         robot.setMode(flexiv::MODE_IDLE);
     } catch (const flexiv::Exception& e) {
         log.error(e.what());

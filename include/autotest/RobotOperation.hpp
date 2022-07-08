@@ -19,6 +19,11 @@ int executeRobotPlan(flexiv::Robot* robot, std::string planName, flexiv::Log* lo
     }
     while (systemStatus.m_programRunning == true)
     {
+        if (robot->isFault())
+        {
+            std::cout<<"robot is fault"<<std::endl;
+            return ROBOT;
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         robot->getSystemStatus(&systemStatus);
     }

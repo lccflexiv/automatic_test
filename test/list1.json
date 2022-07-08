@@ -1,6 +1,7 @@
 {
-   "Tutorial1-Basic" : {
+   "lcc-Tutorial1-Basic" : {
       "executed" : "Yes",
-      "existance" : "Yes"
+      "existance" : "Yes",
+      "success" : "Yes"
    }
 }

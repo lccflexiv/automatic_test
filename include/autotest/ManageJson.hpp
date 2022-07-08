@@ -41,8 +41,9 @@ int generateJSON(std::string filePath, std::string csvFileName, std::string json
     Json::Value plan;
     std::vector<std::string>::iterator it;
     for (it = g_goalPlanList.begin(); it != g_goalPlanList.end(); it++){
-        plan[(*it)]["existance"] = "";
+        plan[(*it)]["success"] = "";
         plan[(*it)]["executed"] = "";
+        plan[(*it)]["existance"] = "";
     }
     Json::StyledWriter sw;
     std::string answer = sw.write(plan);
@@ -55,6 +56,7 @@ int modifyJSON(std::string filePath,
                std::string planName, 
                std::string existance, 
                std::string executed,
+               std::string success,
                flexiv::Log* logPtr)
 {
     std::ifstream ijsonFile(filePath+jsonFileName);
@@ -73,6 +75,7 @@ int modifyJSON(std::string filePath,
     }
     plan[planName]["existance"]=existance;
     plan[planName]["executed"]=executed;
+    plan[planName]["success"]=success;
     Json::StyledWriter sw;
     std::string answer = sw.write(plan);
 
@@ -94,15 +97,18 @@ int checkJson(flexiv::Robot* robotPtr, std::string filePath, std::string jsonFil
     {
         if (std::find(g_realPlanList.begin(), g_realPlanList.end(), eachPlan) == g_realPlanList.end()){
             logPtr->warn("Plan: "+eachPlan+" does not exist");
-            result = modifyJSON(filePath, jsonFileName, eachPlan, "No", "No", logPtr);
+            result = modifyJSON(filePath, jsonFileName, eachPlan, "No", "No", "No", logPtr);
         }   
         else{
             //execute the existed plan
             logPtr->info("Plan: "+eachPlan+" does exist");
-            result = modifyJSON(filePath, jsonFileName, eachPlan, "Yes", "No", logPtr);
+            result = modifyJSON(filePath, jsonFileName, eachPlan, "Yes", "No", "No", logPtr);
             result = executeRobotPlan(robotPtr, eachPlan, logPtr);
             if (result==SUCCESS){
-                result = modifyJSON(filePath, jsonFileName, eachPlan, "Yes", "Yes", logPtr);
+                result = modifyJSON(filePath, jsonFileName, eachPlan, "Yes", "Yes", "Yes", logPtr);
+            }
+            if (result==ROBOT){
+                result = modifyJSON(filePath, jsonFileName, eachPlan, "Yes", "Yes", "No", logPtr);
             }
         } 
     } 
