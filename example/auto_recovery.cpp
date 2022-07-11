@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
         // TODO: remove this extra try catch block after the destructor bug in
         // Windows library is fixed
         try {
-            robot.enable();
+            //robot.enable();
         } catch (const flexiv::Exception& e) {
             log.error(e.what());
             return 0;

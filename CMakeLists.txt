@@ -27,7 +27,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/example)
 
 # list of examples
 set(EXAMPLE_LIST
-  #auto_recovery
+  auto_recovery
   #cartesian_impedance_control
   #clear_fault
   #display_robot_states
