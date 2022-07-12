@@ -63,7 +63,6 @@ int main()
         log.info("---------------start executing plans in csv list---------------");
         
         //Import csv files and Json files
-        //std::string filePath = "/home/ae/flexiv_rdk_versions/flexiv_rdk_autotest/test/";
         std::string filePath = "../test/";
         std::string csvFileName = "list1.csv";
         std::string jsonFileName = "list1.json";

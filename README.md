@@ -1,16 +1,18 @@
 # Automatic Test by Flexiv RDK
 
-### RDK provides Linux C++ & Python Interface
-1. Check with RCA's version and make sure you have the correct rdk lib files
-2. Make sure you are licensed with your robot or simulator
-3. This pack is based on branch v2.9.1-rawforcesensor, you need to replace some head files and lib files in order to compile test_auto.cpp in your work folder and it should work as well. 
-4. Change your IP address in SystemParams.h in include/autotest folder
+### This pack provides Linux C++ Interface for auto test
+#### Steps:
+1. Check with RCA's version and make sure you have the correct rdk lib files and headers.
+2. Make sure you are licensed with your robot or simulator if you need.
+3. This pack has v2.9.1 & v2.10 for now. You can check with the branches.
+4. If you are using a simulator, you should be fine. Just be careful about your local configurations. If you are using a real robot, please change your robot and local IP address in SystemParams.h inside include/autotest folder.
 5. Configure CMake and compile all C++ example programs for the x64 processor platform:
 
         cd flexiv_rdk
         mkdir build && cd build
         cmake ..
         make -j4
+        ./test/test_auto
 
    If compiling for the arm64 processor platform, set the additional CMake option when configuring:
 
