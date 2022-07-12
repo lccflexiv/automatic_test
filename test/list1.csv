@@ -14,13 +14,15 @@ PLAN-CaliStaticTorqueSensorOffset
 PLAN-LogTorqueSensor
 PLAN-UICMDCaliStaticTorqueChannelOffset
 PLAN-CaliStaticTorqueChannelOffset
+PLAN-6DofCaliHome
 PLAN-ArmPackagingPose
 PLAN-CartPoseCtrl-PIH
 PLAN-FreeDriveAuto
 PLAN-FreeDriveManual
-PLAN-Home
+$PLAN-Home
 PLAN-JointPvatDownload
 PLAN-MoveCircle
+PLAN-MoveHere
 PLAN-MoveLine
 PLAN-MoveToManualReady
 PLAN-RecoveryMode
@@ -29,6 +31,7 @@ Pt-PihZigzag
 Pt-PolishSurface
 Pt-TrayLoading
 Pt-TrayUnloading
+Tutorial1-Basic-error
 Tutorial1-Basic
 Tutorial10-AICmdExample
 Tutorial2-PlanVariables
@@ -39,7 +42,6 @@ Tutorial6-ParentPlanParameter
 Tutorial7-SwitchTcp
 Tutorial8-ParameterOperation
 Tutorial9-OnlineToolSwap
-$lcc-Tutorial1-Basic
 MoveAllJointsToZeroDeg
 MultiDOFSineTest_A1
 MultiDOFSineTest_A2

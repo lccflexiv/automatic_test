@@ -208,6 +208,24 @@ public:
     std::vector<std::string> getPrimitiveStates(void) const;
 
     /**
+     * @brief Set global variables for the robot by specifying name and value.
+     * @param[in] globalVars Command to set global variables using the format:
+     * globalVar1=value(s), globalVar2=value(s), ...
+     * @throw ExecutionException if error occurred during execution.
+     */
+    void setGlobalVariables(const std::string& globalVars);
+
+    /**
+     * @brief Get available global variables from the robot.
+     * @return Global variables in the format of a string list.
+     * @throw CommException if there's no response from server.
+     * @throw ExecutionException if error occurred during execution.
+     * @warning This method will block until the request-reply operation with
+     * the server is done. The blocking time varies by communication latency.
+     */
+    std::vector<std::string> getGlobalVariables(void) const;
+
+    /**
      * @brief If the mounted tool has more than one TCP, switch the TCP being
      * used by the robot server. Default to the 1st one (index = 0).
      * @param[in] index Index of the TCP on the mounted tool to switch to.
@@ -229,21 +247,21 @@ public:
     /**
      * @brief Set stiffness of Cartesian impedance controller.
      * @param[in] stiffness \f$ \mathbb{R}^{6 \times 1} \f$ diagonal elements of
-     * the positive definite stiffness matrix. Defaulted to the nominal
-     * stiffness.
+     * the positive definite stiffness matrix. Maximum (nominal) stiffness is
+     * provided as parameter default.
      * @note Applicable modes: MODE_CARTESIAN_IMPEDANCE,
      * MODE_CARTESIAN_IMPEDANCE_NRT.
      * @throw ExecutionException if error occurred during execution.
      * @throw InputException if input is invalid.
      */
     void setCartesianStiffness(const std::vector<double>& stiffness
-                               = {4000, 4000, 4000, 300, 300, 300});
+                               = {4000, 4000, 4000, 1900, 1900, 1900});
 
     /**
      * @brief During Cartesian impedance modes, set preferred elbow swivel
      * angle, which is the angle between the arm plane and the reference plane.
      * @param[in] angle Swivel angle \f$ {\phi}~[rad] \f$, valid range:
-     * [-2.0944, 2.0944] rad, i.e. [-120, 120] deg. Defaulted to the nominal
+     * [-2.0944, 2.0944] rad, i.e. [-120, 120] deg. Default to the nominal
      * swivel angle.
      * @par Geometry definitions
      * Arm plane: defined by the origin of 3 body frames: link2(shoulder),
@@ -261,7 +279,7 @@ public:
 
     //=========================== MOTION METHODS ===============================
     /**
-     * @brief [Real-time] Continuously send joint torque command to robot.
+     * @brief Continuously send joint torque command to robot.
      * @param[in] torques \f$ \mathbb{R}^{Dof \times 1} \f$ target torques of
      * the joints, \f$ {\tau_J}_d~[Nm] \f$.
      * @param[in] enableGravityComp Enable/disable robot gravity compensation.
@@ -269,18 +287,18 @@ public:
      * joints from moving outside the allowed position range, which will
      * trigger a safety fault that requires recovery operation.
      * @note Applicable mode: MODE_JOINT_TORQUE.
+     * @note Real-time (RT).
      * @throw ExecutionException if error occurred during execution.
      * @throw InputException if input is invalid.
      * @warning Always send smooth and continuous commands to avoid sudden
      * movements.
-     * @warning C++ only.
      */
     void streamJointTorque(const std::vector<double>& torques,
         bool enableGravityComp = true, bool enableSoftLimits = true);
 
     /**
-     * @brief [Real-time] Continuously send joint position, velocity and
-     * acceleration command.
+     * @brief Continuously send joint position, velocity, and acceleration
+     * command.
      * @param[in] positions \f$ \mathbb{R}^{Dof \times 1} \f$ target positions
      * of the joints, \f$ q_d~[rad] \f$.
      * @param[in] velocities \f$ \mathbb{R}^{Dof \times 1} \f$ target velocities
@@ -288,20 +306,20 @@ public:
      * @param[in] accelerations \f$ \mathbb{R}^{Dof \times 1} \f$ target
      * accelerations of the joints, \f$ \ddot{q}_d~[rad/s^2] \f$.
      * @note Applicable mode: MODE_JOINT_POSITION.
+     * @note Real-time (RT).
      * @throw ExecutionException if error occurred during execution.
      * @throw InputException if input is invalid.
      * @warning Always send smooth and continuous commands to avoid sudden
      * movements.
-     * @warning C++ only.
      */
     void streamJointPosition(const std::vector<double>& positions,
         const std::vector<double>& velocities,
         const std::vector<double>& accelerations);
 
     /**
-     * @brief [Non-real-time] Discretely send joint position, velocity and
-     * acceleration command. The internal trajectory generator will interpolate
-     * between two set points and make the motion smooth.
+     * @brief Discretely send joint position, velocity, and acceleration
+     * command. The internal trajectory generator will interpolate between two
+     * set points and make the motion smooth.
      * @param[in] positions \f$ \mathbb{R}^{Dof \times 1} \f$ target positions
      * of the joints, \f$ q_d~[rad] \f$.
      * @param[in] velocities \f$ \mathbb{R}^{Dof \times 1} \f$ target velocities
@@ -325,49 +343,50 @@ public:
         const std::vector<double>& maxJerk);
 
     /**
-     * @brief [Real-time] Continuously send TCP pose, velocity and acceleration
-     * command.
+     * @brief Continuously command target TCP pose for the robot to track using
+     * its Cartesian impedance controller.
      * @param[in] pose \f$ \mathbb{R}^{7 \times 1} \f$ target TCP pose
      * in base frame, \f$ \mathbb{R}^{3 \times 1} \f$ position and \f$
      * \mathbb{R}^{4 \times 1} \f$ quaternion \f$ [x, y, z, q_w, q_x, q_y,
      * q_z]^T~[m][] \f$.
-     * @param[in] velocity \f$ \mathbb{R}^{6 \times 1} \f$ target TCP velocity
-     * in base frame, \f$ \mathbb{R}^{3 \times 1} \f$ linear velocity and \f$
-     * \mathbb{R}^{3 \times 1} \f$ angular velocity \f$ [v_x, v_y, v_z,
-     * \omega_x, \omega_y, \omega_z]^T~[m/s][rad/s] \f$.
-     * @param[in] acceleration \f$ \mathbb{R}^{6 \times 1} \f$ target TCP
-     * acceleration in base frame, \f$ \mathbb{R}^{3 \times 1} \f$ linear
-     * acceleration and \f$ \mathbb{R}^{3 \times 1} \f$ angular acceleration \f$
-     * [a_x, a_y, a_z, \alpha_x, \alpha_y, \alpha_z]^T~[m/s^2][rad/s^2] \f$.
+     * @param[in] maxWrench (Optional) \f$ \mathbb{R}^{6 \times 1} \f$ maximum
+     * contact wrench in TCP coordinate, the controller will soften if needed to
+     * keep the actual contact wrench under this value. Default value will be
+     * used if not specified. \f$ \mathbb{R}^{3 \times 1} \f$ force and \f$
+     * \mathbb{R}^{3 \times 1} \f$ moment \f$ [f_x, f_y, f_z, m_x, m_y,
+     * m_z]^T~[N][Nm] \f$.
      * @note Applicable mode: MODE_CARTESIAN_IMPEDANCE.
+     * @note Real-time (RT).
      * @throw ExecutionException if error occurred during execution.
      * @throw InputException if input is invalid.
      * @warning Always send smooth and continuous commands to avoid sudden
      * movements.
-     * @warning C++ only.
      */
     void streamTcpPose(const std::vector<double>& pose,
-        const std::vector<double>& velocity,
-        const std::vector<double>& acceleration);
+        const std::vector<double>& maxWrench
+        = {100.0, 100.0, 100.0, 30.0, 30.0, 30.0});
 
     /**
-     * @brief [Non-real-time] Discretely send TCP pose command with contact
-     * force constraints. The internal trajectory generator will interpolate
-     * between two set points and make the motion smooth.
+     * @brief Discretely command target TCP pose for the robot to track using
+     * its Cartesian impedance controller. An internal motion generator will
+     * smooth the discrete commands.
      * @param[in] pose \f$ \mathbb{R}^{7 \times 1} \f$ target TCP pose
      * in base frame, \f$ \mathbb{R}^{3 \times 1} \f$ position and \f$
      * \mathbb{R}^{4 \times 1} \f$ quaternion \f$ [x, y, z, q_w, q_x, q_y,
      * q_z]^T~[m][] \f$.
-     * @param[in] maxWrench \f$ \mathbb{R}^{6 \times 1} \f$ maximum contact
-     * wrench in TCP coordinate, \f$ \mathbb{R}^{3 \times 1} \f$ force and \f$
+     * @param[in] maxWrench (Optional) \f$ \mathbb{R}^{6 \times 1} \f$ maximum
+     * contact wrench in TCP coordinate, the controller will soften if needed to
+     * keep the actual contact wrench under this value. Default value will be
+     * used if not specified. \f$ \mathbb{R}^{3 \times 1} \f$ force and \f$
      * \mathbb{R}^{3 \times 1} \f$ moment \f$ [f_x, f_y, f_z, m_x, m_y,
      * m_z]^T~[N][Nm] \f$.
      * @note Applicable mode: MODE_CARTESIAN_IMPEDANCE_NRT.
      * @throw ExecutionException if error occurred during execution.
      * @throw InputException if input is invalid.
      */
-    void sendTcpPose(
-        const std::vector<double>& pose, const std::vector<double>& maxWrench);
+    void sendTcpPose(const std::vector<double>& pose,
+        const std::vector<double>& maxWrench
+        = {100.0, 100.0, 100.0, 30.0, 30.0, 30.0});
 
     /**
      * @brief Check if the robot has come to a complete stop.

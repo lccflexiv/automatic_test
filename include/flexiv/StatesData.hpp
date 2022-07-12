@@ -147,8 +147,6 @@ struct RobotStates
      * m_y, m_z]^T \f$.
      */
     std::vector<double> m_extForceInBaseFrame = {};
-
-    std::vector<double> m_rawExtForceInTcpFrame = {};
 };
 
 /**

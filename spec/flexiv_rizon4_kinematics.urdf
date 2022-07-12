@@ -2,13 +2,20 @@
 <!-- ======================================================================== -->
 <!-- | Flexiv Rizon4 Arm (with approximated dynamic parameters)             | -->
 <!-- ======================================================================== -->
-<robot name="A02L-MP">
+<robot name="A02L-M">
+  
   <joint name="joint1" type="revolute">
     <parent link="base_link" />
     <child link="link1" />
     <origin rpy="0 0 3.141592653589793" xyz="0.0 0.0 0.155" />
     <axis xyz="0 0 1" />
     <limit effort="123" lower="-2.7925" upper="2.7925" velocity="2.0944" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint2" type="revolute">
     <parent link="link1" />
@@ -16,6 +23,12 @@
     <origin rpy="0 0 0" xyz="0.0 0.03 0.210" />
     <axis xyz="0 1 0" />
     <limit effort="123" lower="-2.2689" upper="2.2689" velocity="2.0944" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint3" type="revolute">
     <parent link="link2" />
@@ -23,6 +36,12 @@
     <origin rpy="0 0 0" xyz="0.0 0.035 0.205" />
     <axis xyz="0 0 1" />
     <limit effort="64" lower="-2.9671" upper="2.9671" velocity="2.4435" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint4" type="revolute">
     <parent link="link3" />
@@ -30,6 +49,12 @@
     <origin rpy="0 0 -3.141592653589793" xyz="-0.02 -0.03 0.19" />
     <axis xyz="0 1 0" />
     <limit effort="64" lower="-1.8675" upper="2.6878" velocity="2.4435" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint5" type="revolute">
     <parent link="link4" />
@@ -37,6 +62,12 @@
     <origin rpy="0 0 -3.141592653589793" xyz="-0.02 0.025 0.195" />
     <axis xyz="0 0 1" />
     <limit effort="39" lower="-2.9671" upper="2.9671" velocity="4.8869" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint6" type="revolute">
     <parent link="link5" />
@@ -44,6 +75,12 @@
     <origin rpy="0 0 0" xyz="0.0 0.03 0.19" />
     <axis xyz="0 1 0" />
     <limit effort="39" lower="-1.3963" upper="4.5379" velocity="4.8869" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>-1.5707963267948966</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="joint7" type="revolute">
     <parent link="link6" />
@@ -51,13 +88,19 @@
     <origin rpy="0 -1.5707963267948966 0" xyz="-0.055 0.070 0.11" />
     <axis xyz="0 0 1" />
     <limit effort="39" lower="-2.9671" upper="2.9671" velocity="4.8869" />
+    <flexiv>
+      <mdh_to_rca_coordinate_transform>
+        <offset>0</offset>
+        <direction>1</direction>
+      </mdh_to_rca_coordinate_transform>
+    </flexiv>
   </joint>
   <joint name="link7_to_flange" type="fixed">
     <parent link="link7" />
     <child link="flange" />
     <origin rpy="0 0 -3.141592653589793" xyz="0.0 0.0 0.081" />
   </joint>
-
+  
   <link name="base_link">
     <inertial>
       <mass value="3.7" />
@@ -67,14 +110,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link0.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link0.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link0.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link0.stl" />
       </geometry>
     </collision>
   </link>
@@ -87,14 +129,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link1.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link1.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link1.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link1.stl" />
       </geometry>
     </collision>
   </link>
@@ -107,14 +148,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link2.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link2.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link2.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link2.stl" />
       </geometry>
     </collision>
   </link>
@@ -127,14 +167,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link3.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link3.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link3.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link3.stl" />
       </geometry>
     </collision>
   </link>
@@ -147,14 +186,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link4.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link4.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link4.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link4.stl" />
       </geometry>
     </collision>
   </link>
@@ -167,14 +205,13 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link5.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link5.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link5.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link5.stl" />
       </geometry>
     </collision>
   </link>
@@ -187,34 +224,32 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link6.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link6.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link6.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link6.stl" />
       </geometry>
     </collision>
   </link>
   <link name="link7">
     <inertial>
       <mass value="0.8" />
-      <origin rpy="0 0 0" xyz="0.0 0.0 0.03" />
+      <origin rpy="0 0 0" xyz="0.0 -0.0 0.03" />
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/visual/link7.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/visual/link7.stl" />
       </geometry>
-      <material name="rizon_light_grey" />
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="meshes/collision/link7.stl" />
+        <mesh filename="package://flexiv_description/meshes/A02L-M/collision/link7.stl" />
       </geometry>
     </collision>
   </link>
@@ -223,7 +258,7 @@
     <color rgba="0. 0. 1. 0.5" />
   </material>
   <material name="rizon_light_grey">
-    <color rgba="0.7 0.7 0.7 1" />
+    <color rgba="0.9 0.9 0.9 1" />
   </material>
   <material name="rizon_dark_grey">
     <color rgba="0.2 0.2 0.2 1" />
