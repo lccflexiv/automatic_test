@@ -30,7 +30,7 @@ set(EXAMPLE_LIST
   auto_recovery
   #cartesian_impedance_control
   #clear_fault
-  #display_robot_states
+  display_robot_states
   #floating_with_soft_limits
   #gripper_control
   #joint_impedance_control
